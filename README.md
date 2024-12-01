@@ -1,2 +1,2 @@
 # free-hosting-helper
-Host you HTML files for free
+Host your HTML files for free
