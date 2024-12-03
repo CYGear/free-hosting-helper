@@ -7,51 +7,47 @@
   <style>
     body {
       font-family: Arial, sans-serif;
-      text-align: center;
       margin: 0;
-      padding: 20px;
+      padding: 0;
       background-color: #f4f4f4;
-    }
-    h1 {
-      font-size: 28px;
       color: #333;
     }
-    ul {
-      list-style-type: none;
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    #searchContainer {
+      margin: 20px auto;
+      text-align: center;
+    }
+    #searchBar {
+      width: 80%;
+      max-width: 600px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #websitesList {
+      max-height: 500px;
+      overflow-y: scroll;
+      margin: 20px auto;
       padding: 0;
+      list-style: none;
+      width: 80%;
+      max-width: 600px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
     }
-    li {
-      margin: 10px 0;
+    #websitesList li {
+      padding: 10px;
+      border-bottom: 1px solid #eee;
     }
-    a {
-      color: #007BFF;
-      text-decoration: none;
-    }
-    a:hover {
-      text-decoration: underline;
-    }
-  </style>
-</head>
-<body>
-  <h1>Hosted Websites Directory</h1>
-  <ul id="websitesList">
-    <!-- Links will be dynamically added here -->
-  </ul>
-  <script>
-    // Fetch websites.json and populate the list
-    fetch("https://CYGear.github.io/free-hosting-helper/websites.json")
-      .then((response) => response.json())
-      .then((websites) => {
-        const list = document.getElementById("websitesList");
-        websites.forEach((site) => {
-          const listItem = document.createElement("li");
-          listItem.innerHTML = `<a href="${site.url}" target="_blank">${site.name}</a>`;
-          list.appendChild(listItem);
-        });
-      })
-      .catch((error) => {
-        console.error("Error loading websites.json:", error);
-      });
-  </script>
-</body>
-</html>
+    #websitesList li:last-child {
+     
