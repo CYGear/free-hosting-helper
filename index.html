@@ -50,4 +50,66 @@
       border-bottom: 1px solid #eee;
     }
     #websitesList li:last-child {
-     
+      border-bottom: none;
+    }
+    #websitesList a {
+      color: #007BFF;
+      text-decoration: none;
+    }
+    #websitesList a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hosted Websites Directory</h1>
+  </header>
+  <div id="searchContainer">
+    <input
+      type="text"
+      id="searchBar"
+      placeholder="Search for a website by name..."
+    />
+  </div>
+  <ul id="websitesList">
+    <!-- Websites will be dynamically added here -->
+  </ul>
+  <script>
+    // Fetch websites.json and populate the list
+    fetch("https://CYGear.github.io/free-hosting-helper/websites.json")
+      .then((response) => response.json())
+      .then((websites) => {
+        const websitesList = document.getElementById("websitesList");
+        const searchBar = document.getElementById("searchBar");
+
+        function displayWebsites(filteredWebsites) {
+          websitesList.innerHTML = ""; // Clear the list
+          filteredWebsites.forEach((site) => {
+            const listItem = document.createElement("li");
+            listItem.innerHTML = `<a href="${site.url}" target="_blank">${site.name}</a>`;
+            websitesList.appendChild(listItem);
+          });
+        }
+
+        // Initial display of websites
+        displayWebsites(websites);
+
+        // Search filter
+        searchBar.addEventListener("input", () => {
+          const query = searchBar.value.toLowerCase();
+          const filteredWebsites = websites.filter((site) =>
+            site.name.toLowerCase().includes(query)
+          );
+          displayWebsites(filteredWebsites);
+        });
+      })
+      .catch((error) => {
+        console.error("Error loading websites.json:", error);
+        document.getElementById("websitesList").innerHTML =
+          "<li>Error loading websites. Please try again later.</li>";
+      });
+  </script>
+</body>
+</html>
+
