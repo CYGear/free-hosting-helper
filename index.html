@@ -1,29 +1,26 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Hosting Helper</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosted Websites</title>
 </head>
 <body>
-    <header>
-        <h1>Free Hosting Helper</h1>
-        <p>Browse and search for hosted websites</p>
-    </header>
-    <main>
-        <input
-            type="text"
-            id="search"
-            placeholder="Search by website name or ID..."
-        />
-        <ul id="websiteList">
-            <!-- Website links will be dynamically generated here -->
-        </ul>
-    </main>
-    <footer>
-        <p>© 2024 Free Hosting Helper</p>
-    </footer>
-    <script src="search.js"></script>
+  <h1>Hosted Websites</h1>
+  <ul id="websitesList"></ul>
+
+  <script>
+    fetch("https://CYGear.github.io/free-hosting-helper/websites.json")
+      .then((response) => response.json())
+      .then((websites) => {
+        const list = document.getElementById("websitesList");
+        websites.forEach((site) => {
+          const listItem = document.createElement("li");
+          listItem.innerHTML = `<a href="${site.url}" target="_blank">${site.name}</a>`;
+          list.appendChild(listItem);
+        });
+      })
+      .catch((error) => console.error("Error loading websites.json:", error));
+  </script>
 </body>
 </html>
