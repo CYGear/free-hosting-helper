@@ -1,35 +1,138 @@
-<ul id="websitesList">
-  <!-- Websites will be dynamically added here -->
-</ul>
-<script>
-  fetch("https://CYGear.github.io/free-hosting-helper/websites.json")
-    .then((response) => response.json())
-    .then((websites) => {
-      const list = document.getElementById("websitesList");
-      websites.forEach((site) => {
-        const listItem = document.createElement("li");
-        listItem.style.display = "flex";
-        listItem.style.alignItems = "center";
-        listItem.style.marginBottom = "10px";
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hosted Websites Directory</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f4;
+      color: #333;
+    }
+    header {
+      background-color: #007BFF;
+      color: white;
+      padding: 10px 20px;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+    }
+    #searchContainer {
+      margin: 20px auto;
+      text-align: center;
+    }
+    #searchBar {
+      width: 80%;
+      max-width: 600px;
+      padding: 10px;
+      font-size: 16px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    #websitesList {
+      max-height: 500px;
+      overflow-y: auto;
+      margin: 20px auto;
+      padding: 0;
+      list-style: none;
+      width: 80%;
+      max-width: 600px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      background: white;
+    }
+    #websitesList li {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #eee;
+    }
+    #websitesList li:last-child {
+      border-bottom: none;
+    }
+    #websitesList img {
+      width: 50px;
+      height: 50px;
+      margin-right: 10px;
+      border-radius: 4px;
+      object-fit: cover;
+    }
+    #websitesList a {
+      color: #007BFF;
+      text-decoration: none;
+      font-size: 18px;
+    }
+    #websitesList a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Hosted Websites Directory</h1>
+  </header>
+  <div id="searchContainer">
+    <input
+      type="text"
+      id="searchBar"
+      placeholder="Search for a website by name..."
+    />
+  </div>
+  <ul id="websitesList">
+    <!-- Websites will be dynamically added here -->
+  </ul>
+  <script>
+    fetch("https://CYGear.github.io/free-hosting-helper/websites.json")
+      .then((response) => response.json())
+      .then((websites) => {
+        const websitesList = document.getElementById("websitesList");
+        const searchBar = document.getElementById("searchBar");
 
-        if (site.image) {
-          const img = document.createElement("img");
-          img.src = site.image;
-          img.alt = site.name;
-          img.style.width = "50px";
-          img.style.height = "50px";
-          img.style.marginRight = "10px";
-          listItem.appendChild(img);
+        function displayWebsites(filteredWebsites) {
+          websitesList.innerHTML = ""; // Clear the list
+          filteredWebsites.forEach((site) => {
+            const listItem = document.createElement("li");
+
+            // Add the image if available
+            if (site.image) {
+              const img = document.createElement("img");
+              img.src = site.image;
+              img.alt = `${site.name} thumbnail`;
+              listItem.appendChild(img);
+            }
+
+            // Add the website name and link
+            const link = document.createElement("a");
+            link.href = site.url;
+            link.textContent = site.name;
+            link.target = "_blank";
+            listItem.appendChild(link);
+
+            websitesList.appendChild(listItem);
+          });
         }
 
-        const link = document.createElement("a");
-        link.href = site.url;
-        link.textContent = site.name;
-        link.target = "_blank";
-        listItem.appendChild(link);
+        // Initial display of websites
+        displayWebsites(websites);
 
-        list.appendChild(listItem);
+        // Search filter
+        searchBar.addEventListener("input", () => {
+          const query = searchBar.value.toLowerCase();
+          const filteredWebsites = websites.filter((site) =>
+            site.name.toLowerCase().includes(query)
+          );
+          displayWebsites(filteredWebsites);
+        });
+      })
+      .catch((error) => {
+        console.error("Error loading websites.json:", error);
+        document.getElementById("websitesList").innerHTML =
+          "<li>Error loading websites. Please try again later.</li>";
       });
-    });
-</script>
-
+  </script>
+</body>
+</html>
