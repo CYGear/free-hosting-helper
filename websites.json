@@ -21,5 +21,19 @@
     "id": 1733270074855,
     "url": "https://CYGear.github.io/free-hosting-helper/websites/SnakeRemapped_1733270074855/",
     "image": null
+  },
+  {
+    "name": "My Gaming Website",
+    "id": 123456,
+    "genre": "Gaming",
+    "url": "https://example.com/gaming-site",
+    "image": "https://example.com/gaming-thumbnail.png"
+  },
+  {
+    "name": "My Education Website",
+    "id": 654321,
+    "genre": "Education",
+    "url": "https://example.com/education-site",
+    "image": "https://example.com/education-thumbnail.png"
   }
 ]
